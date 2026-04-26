@@ -1,12 +1,16 @@
 
 # debugproxy
 
+![Deno](https://img.shields.io/badge/Deno-white?style=flat-square&logo=deno&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+
 A TypeScript proxy utility built with Deno that provides debugging capabilities for network requests and responses.
 
 This does not work like an actual proxy, meaning you cannot configure a proxy like `HTTP_PROXY=""`. 
 Instead it provides an endpoint that forwards requests to a target server, specified in the first path segment. 
 
-Due to this limitation, the application you want to debug must be able to configure the target domain as part of the request path. 
+Due to this limitation, the application you want to debug must be able to configure the target domain as part of the request path. This probably makes it more compareable with an Gateway or httpbin.
 
 Additionally, this debugproxy includes several utilities to test applications and loadbalancer capabilities.
 
@@ -30,13 +34,32 @@ Additionally, this debugproxy includes several utilities to test applications an
   - viewable via console output or via a simple web interface available at /stream
 - Debug request/response headers and payloads
 - Utility endpoints for testing:
-  - `/delay/:ms` - Simulate response delays where `:ms` is the delay in milliseconds. Responds with a simple 200 OK after the specified delay.
-  - `/status/:code` - Return specific HTTP status codes where `:code` is the desired status code (e.g., 200, 404, 500). Responds with the specified status code and a simple message body.
-  - `/echo` - Echo back the request body and headers in the response. 
-  - `/stream` - Provides a real-time stream of intercepted requests and responses in a human-readable format. This endpoint streams HTML and is intendended to be viewed in a web browser for easy debugging.
-  - `/proxy/:target/*` - Forward requests to a specified target server where `:target` is the base URL of the target server (e.g., `http://localhost:8080`) and `*` represents the path to be forwarded. The proxy will forward the request to the target server and return the response back to the client, while also logging the request and response details for debugging purposes.
-  - `/websocket` - A simple WebSocket endpoint that echoes back messages sent by the client. Useful for testing gateways and load balancers.
-  - `/exit` - Shuts down the proxy server gracefully. This endpoint can be used to stop the proxy when it's no longer needed, allowing for easy cleanup after testing.
+  - <span style="color: #2ea043;">`/delay/:ms`</span> - Simulate response delays.
+    ```bash
+    time curl http://localhost:3001/delay/2000
+    ```
+  - <span style="color: #2ea043;">`/dump`</span> - Dump all received requests to the console and the stream. Always returns a 200 OK response.
+    ```bash
+    curl -i http://localhost:3001/dump
+    ```
+  - <span style="color: #2ea043;">`/status/:code`</span> - Return specific HTTP status codes.
+    ```bash
+    curl -i http://localhost:3001/status/404
+    ```
+  - <span style="color: #2ea043;">`/echo`</span> - Echo back the request body and headers.
+    ```bash
+    curl -X POST http://localhost:3001/echo -d "hello world"
+    ```
+  - <span style="color: #2ea043;">`/stream`</span> - Real-time stream of intercepted requests (HTML). Intended to be used for monitoring requests in a web browser.
+  - <span style="color: #2ea043;">`/proxy/:target/*`</span> - Forward requests to a specified target.
+    ```bash
+    curl http://localhost:3001/example.com/api/data
+    ```
+  - <span style="color: #2ea043;">`/websocket`</span> - Simple WebSocket echo endpoint.
+  - <span style="color: #2ea043;">`/exit`</span> - Shuts down the proxy server.
+    ```bash
+    curl -X POST http://localhost:3001/exit
+    ```
 
 ## Requirements
 
