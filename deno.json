@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "proxy": "deno run --allow-net --allow-env proxy.ts",
+    "dev": "deno run --allow-net --allow-env --watch proxy.ts"
+  }
+}
