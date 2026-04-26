@@ -11,8 +11,7 @@ Due to this limitation, the application you want to debug must be able to config
 Additionally, this debugproxy includes several utilities to test applications and loadbalancer capabilities.
 
 
-> **⚠️ Warning: Not Recommended for Public Deployment**
->
+> [!CAUTION] **Not Recommended for Public Deployment**
 > This debugproxy is designed for **local development and testing only**. Deploying it publicly is strongly discouraged for the following reasons:
 >
 > - **No authentication** - All endpoints are publicly accessible without credentials
